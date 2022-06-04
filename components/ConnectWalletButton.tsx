@@ -1,5 +1,9 @@
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+
+require('@solana/wallet-adapter-react-ui/styles.css')
+
 function ConnectWalletButton() {
-  return <button className="btn btn-primary">Connect</button>
+  return <WalletMultiButton />
 }
 
-export default  ConnectWalletButton
+export default ConnectWalletButton
