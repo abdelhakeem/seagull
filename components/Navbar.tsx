@@ -2,6 +2,7 @@ import Image from 'next/image'
 import ConnectWalletButton from './ConnectWalletButton'
 import NavbarLink from './NavbarLink'
 import styles from '../styles/Navbar.module.css'
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 
 function Navbar() {
   return (
@@ -14,7 +15,7 @@ function Navbar() {
         <ul className={`text-white flex flex-row items-center ${styles.btns}`}>
           <li><NavbarLink text="Home" href="/" /></li>
           <li><NavbarLink text="Transaction Editor" href="/main" /></li>
-          <li><ConnectWalletButton /></li>
+          <li><WalletMultiButton /></li>
         </ul>
       </div>
     </nav>
