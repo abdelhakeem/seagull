@@ -8,6 +8,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Component {...pageProps} />
     </Layout>
   );
+
 }
 
 export default MyApp;
