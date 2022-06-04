@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import ConnectWalletButton from './ConnectWalletButton'
 import NavbarLink from './NavbarLink'
 import styles from '../styles/Navbar.module.css'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
