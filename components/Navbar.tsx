@@ -14,7 +14,7 @@ function Navbar() {
         <ul className={`text-white flex flex-row items-center ${styles.btns}`}>
           <li><NavbarLink text="Home" href="/" /></li>
           <li><NavbarLink text="Transaction Editor" href="/main" /></li>
-          <li><WalletMultiButton /></li>
+          <li><WalletMultiButton className={styles.walletBtn} /></li>
         </ul>
       </div>
     </nav>
