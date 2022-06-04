@@ -6,7 +6,7 @@ import styles from '../styles/Navbar.module.css'
 function Navbar() {
   return (
     <nav>
-      <div className="container mx-auto my-8 flex flex-row justify-between">
+      <div className="container mx-auto py-8 flex flex-row justify-between">
         <Image src="/logo.png"
                alt="Seagull Logo"
                width={155}

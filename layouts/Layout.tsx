@@ -1,14 +1,23 @@
 import styles from "../styles/Home.module.css";
-import React, { ReactNode } from "react";
+import React, {ReactNode} from "react";
+import Navbar from "../components/Navbar";
+import Head from "next/head";
 
 interface Props {
   children?: ReactNode | ReactNode[];
 }
 
-const Layout: React.FC<Props> = ({ children }) => {
+const Layout: React.FC<Props> = ({children}) => {
   return (
     <div className="bg-dark-back px-20">
+      <Head>
+        <title>Seagull</title>
+        <meta name="description"
+              content="Send custom transactions to Solana"/>
+        <link rel="icon" href="/favicon.ico"/>
+      </Head>
       <main className="h-screen">
+        <Navbar/>
         {children}
 
         <img
