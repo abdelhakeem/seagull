@@ -11,10 +11,11 @@ export interface InstructionType {
   'data': Data[]
 }
 
-function Instruction({ instruction, editInstruction, deleteInstruction }: {
+function Instruction({ instruction, editInstruction, deleteInstruction, showDelete }: {
   instruction: InstructionType,
   editInstruction: Function,
-  deleteInstruction: Function
+  deleteInstruction: Function,
+  showDelete: boolean
 }) {
   const [reveal, setReveal] = useState(true);
   const [nextAccountId, setNextAccountId] = useState(2);
@@ -87,12 +88,14 @@ function Instruction({ instruction, editInstruction, deleteInstruction }: {
         Instruction {instruction.id}
       </h2>
       <div className={`collapse-content ${styles.instruction}`}>
-        <button
-          className="mr-2 w-full btn text-white bg-red-500 hover:bg-red-600"
-          onClick={() => deleteInstruction(instruction.id)}
-        >
-          <FaTrash className="mr-2" /> Delete Instruction
-        </button>
+        {showDelete ?
+          <button
+            className="mr-2 w-full btn text-white bg-red-500 hover:bg-red-600"
+            onClick={() => deleteInstruction(instruction.id)}
+          >
+            <FaTrash className="mr-2" /> Delete Instruction
+          </button> : ''
+        }
         <input
           type="text"
           value={instruction.programId}
