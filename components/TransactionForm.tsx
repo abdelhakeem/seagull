@@ -1,10 +1,36 @@
 import Instructions from './Instructions'
-import { InstructionType } from './Instruction'
+import {InstructionType} from './Instruction'
 import styles from '../styles/TransactionForm.module.css'
-import { useState, MouseEventHandler } from 'react'
-import { dataTypes } from './DataField'
+import {useWallet} from '@solana/wallet-adapter-react';
+import {useState, MouseEventHandler, useEffect} from 'react'
+import {dataTypes} from './DataField'
 
-function TransactionForm() {
+interface Props {
+  preset: String;
+}
+
+function TransactionForm({preset}: Props) {
+  const {publicKey} = useWallet()
+
+  const createTransferInstruction = (id: number): InstructionType => {
+
+    return {
+      'id': id,
+      'programId': '11111111111111111111111111111111',
+      'accounts': [{
+        id: 1,
+        pubKey: publicKey?.toBase58() || ' ',
+        signer: true,
+        writable: true
+      }],
+      'data': [{
+        id: 1,
+        type: Object.keys(dataTypes)[0],
+        value: ''
+      }]
+    }
+  }
+
   const createDefaultInstruction = (id: number): InstructionType => {
     return {
       'id': id,
@@ -22,9 +48,16 @@ function TransactionForm() {
       }]
     }
   }
-
   const [nextId, setNextId] = useState(2);
   const [instructions, setInstructions] = useState([createDefaultInstruction(1)]);
+
+  useEffect(() => {
+    if (preset == 'transfer') {
+      setInstructions([createTransferInstruction(1)])
+    } else {
+      setInstructions([createDefaultInstruction(1)])
+    }
+  }, [preset])
 
   const addInstruction: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
@@ -39,7 +72,7 @@ function TransactionForm() {
   }
 
   const handleDeleteInstruction = (id: number) => {
-    setInstructions(instructions.filter((inst) =>inst.id !== id));
+    setInstructions(instructions.filter((inst) => inst.id !== id));
   }
 
   return (
