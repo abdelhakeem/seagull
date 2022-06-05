@@ -1,5 +1,5 @@
 import type {NextPage} from 'next'
-import {FaChevronRight} from "react-icons/Fa";
+import {FaChevronRight} from "react-icons/fa";
 import Link from "next/link";
 
 const Home: NextPage = () => {
