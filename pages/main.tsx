@@ -1,12 +1,16 @@
 import type { NextPage } from 'next'
 import ClusterPicker from "../components/ClusterPicker";
-import { useState } from "react";
+import React, { useState } from "react";
 import PresetTransactionPicker from "../components/PresetTransactionPicker";
 import TransactionForm from '../components/TransactionForm'
 import Result from "../components/Result";
 
-const Main: NextPage = () => {
-  const [cluster, setCluster] = useState("devnet");
+interface Props {
+  setCluster: Function;
+}
+
+const Main: React.FC<Props> = ({setCluster}) => {
+
   const [preset, setPreset] = useState("single instruction");
 
   return (

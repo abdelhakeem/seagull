@@ -12,7 +12,12 @@ require('@solana/wallet-adapter-react-ui/styles.css')
 function MyApp({ Component, pageProps }: AppProps) {
   const wallets = [new PhantomWalletAdapter()]
 
+  const [cluster, setCluster] = useState("devnet");
   const [endpoint, setEndPoint] = useState(clusterApiUrl('devnet'))
+
+  pageProps = {...pageProps, setCluster}
+
+  console.log(cluster)
 
   return (
     <ConnectionProvider endpoint={endpoint}>
