@@ -12,6 +12,14 @@ interface Props {
 const Main: React.FC<Props> = ({setCluster}) => {
 
   const [preset, setPreset] = useState("single instruction");
+  const [result, setResult] = useState({
+    status: 'info',
+    msg: "[Transaction result]"
+  })
+
+  const updateResult = (newResult: { status: string, msg: string }) => {
+    setResult(newResult)
+  }
 
   return (
     <div className="w-full h-4/5 flex py-2 justify-center items-start">
@@ -21,8 +29,8 @@ const Main: React.FC<Props> = ({setCluster}) => {
       </div>
 
       <div className="w-3/4 h-full pl-4 ml-4 border-l-2 border-gray-500/20">
-        <TransactionForm preset={preset} />
-        <Result message="success"/>
+        <TransactionForm preset={preset} updateResult={updateResult} />
+        <Result result={result} />
       </div>
     </div>
   )
