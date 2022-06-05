@@ -13,17 +13,23 @@ function TransactionForm() {
     }
   }
 
-  const [instructions, setInstructions] = useState([createDefaultInstruction(0)]);
+  const [nextId, setNextId] = useState(2);
+  const [instructions, setInstructions] = useState([createDefaultInstruction(1)]);
 
   const addInstruction: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    setInstructions([...instructions, createDefaultInstruction(instructions.length)]);
+    setInstructions([...instructions, createDefaultInstruction(nextId)]);
+    setNextId(nextId + 1);
   };
 
   const handleEditInstruction = (instruction: InstructionType) => {
     setInstructions(instructions.map((inst) =>
       inst.id === instruction.id ? instruction : inst)
     );
+  }
+
+  const handleDeleteInstruction = (id: number) => {
+    setInstructions(instructions.filter((inst) =>inst.id !== id));
   }
 
   return (
@@ -44,6 +50,7 @@ function TransactionForm() {
         <Instructions
           instructions={instructions}
           editInstruction={handleEditInstruction}
+          deleteInstruction={handleDeleteInstruction}
         />
       </div>
 

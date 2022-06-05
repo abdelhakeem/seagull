@@ -2,7 +2,7 @@ import AccountField, { Account } from './AccountField'
 import DataField, { Data, dataTypes } from './DataField'
 import styles from '../styles/Instruction.module.css'
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react'
-import { FaPlus } from 'react-icons/fa'
+import { FaPlus, FaTrash } from 'react-icons/fa'
 
 export interface InstructionType {
   'id': number,
@@ -11,11 +11,14 @@ export interface InstructionType {
   'data': Data[]
 }
 
-function Instruction({ instruction, editInstruction }: {
+function Instruction({ instruction, editInstruction, deleteInstruction }: {
   instruction: InstructionType,
-  editInstruction: Function
+  editInstruction: Function,
+  deleteInstruction: Function
 }) {
-  const [reveal, setReveal] = useState(true)
+  const [reveal, setReveal] = useState(true);
+  const [nextAccountId, setNextAccountId] = useState(2);
+  const [nextDataId, setNextDataId] = useState(2);
 
   const onReveal = () => {
     setReveal(!reveal)
@@ -24,21 +27,23 @@ function Instruction({ instruction, editInstruction }: {
   const addAccount: MouseEventHandler = (e) => {
     e.preventDefault();
     instruction.accounts.push({
-      id: instruction.accounts.length,
+      id: nextAccountId,
       pubKey: '',
       signer: false,
       writable: false
     });
+    setNextAccountId(nextAccountId + 1);
     editInstruction(instruction)
   };
 
   const addData: MouseEventHandler = (e) => {
     e.preventDefault();
     instruction.data.push({
-      id: instruction.data.length,
+      id: nextDataId,
       type: Object.keys(dataTypes)[0],
       value: ''
     });
+    setNextDataId(nextDataId + 1);
     editInstruction(instruction)
   };
 
@@ -78,10 +83,16 @@ function Instruction({ instruction, editInstruction }: {
   return (
     <div className="collapse collapse-arrow">
       <input type="checkbox" checked={reveal} onChange={onReveal} />
-      <h2 className="font-bold text-white collapse-title">
+      <h2 className="font-bold text-white collapse-title flex flex-row items-center">
         Instruction {instruction.id}
       </h2>
       <div className={`collapse-content ${styles.instruction}`}>
+        <button
+          className="mr-2 w-full btn text-white bg-red-500 hover:bg-red-600"
+          onClick={() => deleteInstruction(instruction.id)}
+        >
+          <FaTrash className="mr-2" /> Delete Instruction
+        </button>
         <input
           type="text"
           value={instruction.programId}
@@ -92,7 +103,7 @@ function Instruction({ instruction, editInstruction }: {
         <div>
           <h3 className="font-bold text-white my-2">Accounts</h3>
           <button
-            className="btn bg-green-500 hover:bg-green:400"
+            className="btn bg-green-500 hover:bg-green:400 text-white"
             onClick={addAccount}
           >
             <FaPlus />
@@ -111,7 +122,7 @@ function Instruction({ instruction, editInstruction }: {
         <div>
           <h3 className="font-bold text-white my-2">Data</h3>
           <button
-            className="btn bg-green-500 hover:bg-green:400"
+            className="btn bg-green-500 hover:bg-green:400 text-white"
             onClick={addData}
           >
             <FaPlus />
