@@ -13,6 +13,7 @@ const Home: NextPage = () => {
       <div>
         <button
           className="relative block bg-green-normal hover:bg-green-dark text-xl cursor-pointer z-20 font-medium rounded-xl">
+            
           <Link href="/main">
             <p className="flex gap-3  px-10 py-3 justify-center items-center">Get started <FaChevronRight/></p>
           </Link>

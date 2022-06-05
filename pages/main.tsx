@@ -1,7 +1,11 @@
-import type { NextPage } from 'next'
+import type { NextPage } from "next";
+import { Box, Button, FormControl, FormLabel, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Textarea } from '@chakra-ui/react'
+import TransEditor from "../components/TransEditor";
 
 const Main: NextPage = () => {
-  return <div></div>
-}
+  return (
+    <TransEditor/>
+  );
+};
 
-export default Main
+export default Main;
