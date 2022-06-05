@@ -14,6 +14,7 @@ module.exports = {
           normal: "#02DC85",
         },
         blue: "#4E44CE",
+        field: "#2a303c",
       },
       fontFamily: {
         nunito: ['Nunito', "sans-serif"]
