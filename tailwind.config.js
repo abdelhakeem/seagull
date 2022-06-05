@@ -1,4 +1,5 @@
 module.exports = {
+  jit: false,
   content: [
     "./pages/**/*.{js,jsx,ts,tsx}",
     "./components/**/*.{js,jsx,ts,tsx}",
@@ -8,8 +9,14 @@ module.exports = {
     extend: {
       colors: {
         "dark-back": "#111111",
-        green: "#02DC85",
+        green: {
+          dark: "#1BA870",
+          normal: "#02DC85",
+        },
         blue: "#4E44CE",
+      },
+      fontFamily: {
+        nunito: ['Nunito', "sans-serif"]
       },
     },
   },

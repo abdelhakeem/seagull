@@ -1,4 +1,3 @@
-import styles from "../styles/Home.module.css";
 import React, {ReactNode} from "react";
 import Navbar from "../components/Navbar";
 import Head from "next/head";
@@ -21,11 +20,11 @@ const Layout: React.FC<Props> = ({children}) => {
         {children}
 
         <img
-          className="w-3/5 fixed -bottom-1/2 -left-1/4"
+          className="w-3/5 z-0 fixed -bottom-1/2 -left-1/4"
           src="/images/green-blob.png"
         />
         <img
-          className="w-1/4 fixed top-1/5 right-0"
+          className="w-1/4 z-0 fixed top-1/5 right-0"
           src="/images/blue-blob.png"
         />
       </main>
