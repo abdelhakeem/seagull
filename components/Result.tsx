@@ -20,6 +20,7 @@ function Result({ result }: Props) {
             <a
               href={`https://explorer.solana.com/tx/${result.msg}`}
               target="_blank"
+              rel="noreferrer"
             >
               Transaction succeeded! Click to show it on Solana Explorer...
             </a> : result.msg
