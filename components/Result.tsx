@@ -2,9 +2,10 @@ import React from "react";
 
 interface Props {
   result: { status: string, msg: string };
+  cluster: string;
 }
 
-function Result({ result }: Props) {
+function Result({ result, cluster }: Props) {
   const resultClassNames: { [key: string]: string } = {
     'success': 'text-green-500',
     'info': 'text-purple-600',
@@ -18,7 +19,7 @@ function Result({ result }: Props) {
         {
           result.status === "success" ?
             <a
-              href={`https://explorer.solana.com/tx/${result.msg}`}
+              href={`https://explorer.solana.com/tx/${result.msg}?cluster=${cluster}`}
               target="_blank"
               rel="noreferrer"
             >

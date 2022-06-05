@@ -7,9 +7,10 @@ import Result from "../components/Result";
 
 interface Props {
   setCluster: Function;
+  cluster: string;
 }
 
-const Main: React.FC<Props> = ({setCluster}) => {
+const Main: React.FC<Props> = ({setCluster, cluster}) => {
 
   const [preset, setPreset] = useState("single instruction");
   const [result, setResult] = useState({
@@ -30,7 +31,7 @@ const Main: React.FC<Props> = ({setCluster}) => {
 
       <div className="w-3/4 h-full pl-4 ml-4 border-l-2 border-gray-500/20">
         <TransactionForm preset={preset} updateResult={updateResult} />
-        <Result result={result} />
+        <Result result={result} cluster={cluster} />
       </div>
     </div>
   )
