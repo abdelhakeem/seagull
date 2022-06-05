@@ -1,15 +1,18 @@
 import Instructions from './Instructions'
 import {InstructionType} from './Instruction'
 import styles from '../styles/TransactionForm.module.css'
-import {useWallet} from '@solana/wallet-adapter-react';
+import {useConnection, useWallet} from '@solana/wallet-adapter-react';
 import {useState, MouseEventHandler, useEffect} from 'react'
 import {dataTypes} from './DataField'
+import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
+import { struct } from '@solana/buffer-layout';
 
 interface Props {
   preset: String;
+  updateResult: Function;
 }
 
-function TransactionForm({preset}: Props) {
+function TransactionForm({preset, updateResult}: Props) {
   const {publicKey} = useWallet()
 
   const createTransferInstruction = (id: number): InstructionType => {
@@ -50,6 +53,8 @@ function TransactionForm({preset}: Props) {
   }
   const [nextId, setNextId] = useState(2);
   const [instructions, setInstructions] = useState([createDefaultInstruction(1)]);
+  const { connection } = useConnection();
+  const { sendTransaction } = useWallet();
 
   useEffect(() => {
     if (preset == 'transfer') {
@@ -69,11 +74,61 @@ function TransactionForm({preset}: Props) {
     setInstructions(instructions.map((inst) =>
       inst.id === instruction.id ? instruction : inst)
     );
-  }
+  };
 
   const handleDeleteInstruction = (id: number) => {
     setInstructions(instructions.filter((inst) => inst.id !== id));
+  };
+
+  const submit: MouseEventHandler = async (e) => {
+    e.preventDefault();
+
+    updateResult({ status: 'info', msg: "Sending transaction..." });
+
+    try {
+      const signature = await sendAndConfirmTransaction();
+      updateResult({ status: 'success', msg: signature });
+    } catch(error: any) {
+      updateResult({ status: 'error', msg: error.message });
+    }
   }
+
+  const sendAndConfirmTransaction = async () => {
+    const transaction = new Transaction();
+
+    for (const instruction of instructions) {
+      const dataLayout = struct(instruction.data.map(d =>
+        dataTypes[d.type][0](d.id)
+      ));
+
+      const dataBuffer = Buffer.alloc(dataLayout.span);
+
+      const values: { [key: string]: any } = {}
+
+      for (const dataItem of instruction.data) {
+        values[dataItem.id] = dataTypes[dataItem.type][1](dataItem.value)
+      }
+
+      dataLayout.encode(values, dataBuffer)
+
+      transaction.add(new TransactionInstruction({
+        programId: new PublicKey(instruction.programId),
+        keys: instruction.accounts.map(acc => {
+          return {
+            pubkey: new PublicKey(acc.pubKey),
+            isSigner: acc.signer,
+            isWritable: acc.writable
+          }
+        }),
+        data: dataBuffer
+      }));
+    }
+
+    const signature = await sendTransaction(transaction, connection);
+    await connection.confirmTransaction(signature, 'processed');
+
+    return signature
+  };
 
   return (
     <form className="container flex flex-col h-4/5">
@@ -86,7 +141,11 @@ function TransactionForm({preset}: Props) {
           >
             Add Instruction
           </button>
-          <button className="btn btn-primary">Go!</button>
+          <button
+            className="btn btn-primary"
+            onClick={submit}>
+            Go!
+          </button>
         </div>
       </div>
       <div className="h-full overflow-y-scroll">

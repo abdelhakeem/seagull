@@ -1,4 +1,4 @@
-import { blob, cstr, f32, f64, ns64, nu64, s16, s32, s8, u16, u32, u8, utf8 } from "@solana/buffer-layout"
+import { cstr, f32, f64, Layout, ns64, nu64, s16, s32, s8, u16, u32, u8, utf8 } from "@solana/buffer-layout"
 import { FaTrash } from "react-icons/fa"
 import { ChangeEventHandler } from "react"
 
@@ -8,20 +8,19 @@ export interface Data {
   'value': string
 }
 
-export const dataTypes = {
-  '8-bit Unsigned Int': u8,
-  '16-bit Unsigned Int': u16,
-  '32-bit Unsigned Int': u32,
-  '64-bit Unsigned Int': nu64,
-  '8-bit Signed Int': s8,
-  '16-bit Signed Int': s16,
-  '32-bit Signed Int': s32,
-  '64-bit Signed Int': ns64,
-  '32-bit Float': f32,
-  '64-bit Float': f64,
-  'C-style String': cstr,
-  'UTF8 String': utf8,
-  'Blob': blob
+export const dataTypes: { [key: string]: Function[] } = {
+  '8-bit Unsigned Int': [u8, parseInt],
+  '16-bit Unsigned Int': [u16, parseInt],
+  '32-bit Unsigned Int': [u32, parseInt],
+  '64-bit Unsigned Int': [nu64, parseInt],
+  '8-bit Signed Int': [s8, parseInt],
+  '16-bit Signed Int': [s16, parseInt],
+  '32-bit Signed Int': [s32, parseInt],
+  '64-bit Signed Int': [ns64, parseInt],
+  '32-bit Float': [f32, parseFloat],
+  '64-bit Float': [f64, parseFloat],
+  'C-style String': [cstr, (str: string) => str],
+  'UTF8 String': [utf8, (str: string) => str]
 }
 
 function DataField({ data, showDelete, editData, deleteData }: {
