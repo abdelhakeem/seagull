@@ -8,7 +8,7 @@ function ClusterPicker({onChange} : Props) {
 
 
   return (
-    <div className="flex flex-col gap-3 font-nunito">
+    <div className="flex flex-col gap-3 font-nunito text-xl">
       <label className="text-white">Pick a cluster:</label>
       <select
         className="select select-bordered border-green-normal w-full max-w-xs"
