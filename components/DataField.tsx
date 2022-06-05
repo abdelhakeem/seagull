@@ -30,7 +30,7 @@ function DataField({ data, showDelete, editData, deleteData }: {
   editData: Function,
   deleteData: Function
 }) {
-  const handleTypeChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleTypeChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     data.type = e.target.value;
     editData(data);
   };
