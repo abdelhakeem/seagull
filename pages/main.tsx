@@ -21,7 +21,7 @@ const Main: React.FC<Props> = ({setCluster}) => {
       </div>
 
       <div className="w-3/4 h-full pl-4 ml-4 border-l-2 border-gray-500/20">
-        <TransactionForm />
+        <TransactionForm preset={preset} />
         <Result message="success"/>
       </div>
     </div>
