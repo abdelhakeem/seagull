@@ -3,7 +3,7 @@ import styles from '../styles/TransactionForm.module.css'
 
 function TransactionForm() {
   return (
-    <form className="container flex flex-col">
+    <form className="container flex flex-col h-4/5">
       <div className={`flex flex-row justify-between items-center mb-4 ${styles.header}`}>
         <h1 className="font-bold text-white">Transaction</h1>
         <div>
@@ -11,7 +11,10 @@ function TransactionForm() {
           <button className="btn btn-primary">Go!</button>
         </div>
       </div>
-      <Instructions instructions={instructions} />
+      <div className="h-full overflow-y-scroll">
+        <Instructions instructions={instructions} />
+      </div>
+
     </form>
   )
 }

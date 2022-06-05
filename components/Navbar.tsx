@@ -11,7 +11,7 @@ function Navbar() {
                alt="Seagull Logo"
                width={155}
                height={41} />
-        <ul className={`text-white flex flex-row items-center ${styles.btns}`}>
+        <ul className="text-white flex flex-row items-center justify-end gap-20">
           <li><NavbarLink text="Home" href="/" /></li>
           <li><NavbarLink text="Transaction Editor" href="/main" /></li>
           <li className={styles.walletBtn}><WalletMultiButton /></li>
