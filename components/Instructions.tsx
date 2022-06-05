@@ -11,6 +11,7 @@ function Instructions({ instructions, editInstruction, deleteInstruction }: {
       instruction={instruction}
       editInstruction={editInstruction}
       deleteInstruction={deleteInstruction}
+      showDelete={instructions.length > 1}
     />);
 
   return (
