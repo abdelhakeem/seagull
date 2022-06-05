@@ -2,14 +2,24 @@ import Instructions from './Instructions'
 import { InstructionType } from './Instruction'
 import styles from '../styles/TransactionForm.module.css'
 import { useState, MouseEventHandler } from 'react'
+import { dataTypes } from './DataField'
 
 function TransactionForm() {
   const createDefaultInstruction = (id: number): InstructionType => {
     return {
       'id': id,
       'programId': '',
-      'accounts': [],
-      'data': []
+      'accounts': [{
+        id: 1,
+        pubKey: '',
+        signer: false,
+        writable: false
+      }],
+      'data': [{
+        id: 1,
+        type: Object.keys(dataTypes)[0],
+        value: ''
+      }]
     }
   }
 
