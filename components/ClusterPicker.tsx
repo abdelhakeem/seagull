@@ -17,8 +17,7 @@ function ClusterPicker({onChange} : Props) {
       >
         <option value="devnet">Devnet (Recommended)</option>
         <option value="testnet">Testnet</option>
-        <option value="mainnet">Mainnet Beta (Not Recommended)</option>
-        <option value="localhost">Localhost</option>
+        <option value="mainnet-beta">Mainnet Beta (Not Recommended)</option>
       </select>
     </div>
   )
