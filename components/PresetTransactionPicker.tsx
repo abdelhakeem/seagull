@@ -8,7 +8,7 @@ function PresetTransactionPicker({onChange}: Props) {
 
 
   return (
-    <div className="flex flex-col gap-3 font-nunito relative z-30 text-white text-xl">
+    <div className="flex flex-col gap-3 font-nunito text-white text-xl">
       <label className="text-white">Pick a preset transaction:</label>
 
       <label className="label cursor-pointer justify-start gap-10">
