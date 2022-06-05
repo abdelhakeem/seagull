@@ -1,5 +1,6 @@
 import { blob, cstr, f32, f64, ns64, nu64, s16, s32, s8, u16, u32, u8, utf8 } from "@solana/buffer-layout"
-import { FaPlus, FaTrash } from "react-icons/fa"
+import { FaTrash } from "react-icons/fa"
+import { ChangeEventHandler } from "react"
 
 export interface Data {
   'id': number
@@ -7,7 +8,7 @@ export interface Data {
   'value': string
 }
 
-const dataTypes = {
+export const dataTypes = {
   '8-bit Unsigned Int': u8,
   '16-bit Unsigned Int': u16,
   '32-bit Unsigned Int': u32,
@@ -23,16 +24,29 @@ const dataTypes = {
   'Blob': blob
 }
 
-function DataField({ data, last }: {
-  'data': Data,
-  'last': boolean
+function DataField({ data, showDelete, editData, deleteData }: {
+  data: Data,
+  showDelete: boolean,
+  editData: Function,
+  deleteData: Function
 }) {
+  const handleTypeChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    data.type = e.target.value;
+    editData(data);
+  };
+
+  const handleValueChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    data.value = e.target.value;
+    editData(data);
+  };
+
   return (
     <div className="flex flex-row justify-between items-center">
       <select
         value={data.type}
         placeholder="Type"
         className="input input-bordered input-primary flex-1"
+        onChange={handleTypeChange}
       >
         {
           Object.keys(dataTypes).map((type) =>
@@ -45,14 +59,14 @@ function DataField({ data, last }: {
         value={data.value}
         placeholder="Value"
         className="input input-bordered input-primary flex-1 ml-2"
+        onChange={handleValueChange}
       />
-      {!last ?
-        <button className="ml-2 btn bg-red-500 hover:bg-red-600 text-white">
+      {showDelete ?
+        <button
+          className="ml-2 btn bg-red-500 hover:bg-red-600 text-white"
+          onClick={() => deleteData(data.id)}
+        >
           <FaTrash />
-        </button> : ''}
-      {last ?
-        <button className="ml-2 btn bg-green-500 hover:bg-green-600 text-white">
-          <FaPlus />
         </button> : ''}
     </div>
   )

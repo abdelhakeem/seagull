@@ -1,60 +1,54 @@
 import Instructions from './Instructions'
+import { InstructionType } from './Instruction'
 import styles from '../styles/TransactionForm.module.css'
+import { useState, MouseEventHandler } from 'react'
 
 function TransactionForm() {
+  const createDefaultInstruction = (id: number): InstructionType => {
+    return {
+      'id': id,
+      'programId': '',
+      'accounts': [],
+      'data': []
+    }
+  }
+
+  const [instructions, setInstructions] = useState([createDefaultInstruction(0)]);
+
+  const addInstruction: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    setInstructions([...instructions, createDefaultInstruction(instructions.length)]);
+  };
+
+  const handleEditInstruction = (instruction: InstructionType) => {
+    setInstructions(instructions.map((inst) =>
+      inst.id === instruction.id ? instruction : inst)
+    );
+  }
+
   return (
     <form className="container flex flex-col h-4/5">
       <div className={`flex flex-row justify-between items-center mb-4 ${styles.header}`}>
         <h1 className="font-bold text-white">Transaction</h1>
         <div>
-          <button className="btn btn-secondary">Add Instruction</button>
+          <button
+            className="btn btn-secondary"
+            onClick={addInstruction}
+          >
+            Add Instruction
+          </button>
           <button className="btn btn-primary">Go!</button>
         </div>
       </div>
       <div className="h-full overflow-y-scroll">
-        <Instructions instructions={instructions} />
+        <Instructions
+          instructions={instructions}
+          editInstruction={handleEditInstruction}
+        />
       </div>
 
     </form>
   )
 }
-
-const instructions = [
-  {
-    'id': 1,
-    'programId': '11111111111111111111111111111111111111111111',
-    'accounts': [
-      {
-        'id': 1,
-        'pubKey': 'HGkG2dWRbijxyss79dUjHfKRV4K51yTjRPbhZ6VnhW6p',
-        'signer': true,
-        'writable': true
-      },
-      {
-        'id': 2,
-        'pubKey': '2hVkQpoPRqsRjNCi7JnFMjTXa3wD4SqhA51exS2YsJQH',
-        'signer': false,
-        'writable': true
-      }
-    ],
-    'data': [
-      {
-        'id': 1,
-        'type': '32-bit Unsigned Int',
-        'value': '2'
-      },
-      {
-        'id': 2,
-        'type': '64-bit Signed Int',
-        'value': '-20'
-      },
-      {
-        'id': 3,
-        'type': 'Blob',
-        'value': 'asBGHR34fg34g2GVSDFHslksakd12'
-      }
-    ]
-  }
-]
 
 export default TransactionForm
