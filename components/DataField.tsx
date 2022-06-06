@@ -3,7 +3,7 @@ import { FaTrash } from "react-icons/fa"
 import { ChangeEventHandler } from "react"
 
 export interface Data {
-  'id': number
+  'id': string
   'type': string
   'value': string
 }
