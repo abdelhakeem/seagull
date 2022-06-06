@@ -2,7 +2,7 @@ import { ChangeEventHandler } from "react"
 import { FaTrash } from "react-icons/fa"
 
 export interface Account {
-  'id': number
+  'id': string
   'pubKey': string,
   'signer': boolean,
   'writable': boolean

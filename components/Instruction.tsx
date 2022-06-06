@@ -3,23 +3,23 @@ import DataField, { Data, dataTypes } from './DataField'
 import styles from '../styles/Instruction.module.css'
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react'
 import { FaPlus, FaTrash } from 'react-icons/fa'
+import { v4 as uuidv4 } from 'uuid';
 
 export interface InstructionType {
-  'id': number,
+  'id': string,
   'programId': string,
   'accounts': Account[],
   'data': Data[]
 }
 
-function Instruction({ instruction, editInstruction, deleteInstruction, showDelete }: {
+function Instruction({ instruction, editInstruction, deleteInstruction, showDelete, index }: {
   instruction: InstructionType,
   editInstruction: Function,
   deleteInstruction: Function,
-  showDelete: boolean
+  showDelete: boolean,
+  index: number
 }) {
   const [reveal, setReveal] = useState(true);
-  const [nextAccountId, setNextAccountId] = useState(2);
-  const [nextDataId, setNextDataId] = useState(2);
 
   const onReveal = () => {
     setReveal(!reveal)
@@ -28,23 +28,21 @@ function Instruction({ instruction, editInstruction, deleteInstruction, showDele
   const addAccount: MouseEventHandler = (e) => {
     e.preventDefault();
     instruction.accounts.push({
-      id: nextAccountId,
+      id: uuidv4(),
       pubKey: '',
       signer: false,
       writable: false
     });
-    setNextAccountId(nextAccountId + 1);
     editInstruction(instruction)
   };
 
   const addData: MouseEventHandler = (e) => {
     e.preventDefault();
     instruction.data.push({
-      id: nextDataId,
+      id: uuidv4(),
       type: Object.keys(dataTypes)[0],
       value: ''
     });
-    setNextDataId(nextDataId + 1);
     editInstruction(instruction)
   };
 
@@ -60,7 +58,7 @@ function Instruction({ instruction, editInstruction, deleteInstruction, showDele
     editInstruction(instruction)
   };
 
-  const handleDeleteAccount = (id: number) => {
+  const handleDeleteAccount = (id: string) => {
     instruction.accounts = instruction.accounts.filter((acc) =>
       acc.id !== id
     )
@@ -74,7 +72,7 @@ function Instruction({ instruction, editInstruction, deleteInstruction, showDele
     editInstruction(instruction)
   };
 
-  const handleDeleteData = (id: number) => {
+  const handleDeleteData = (id: string) => {
     instruction.data = instruction.data.filter((d) =>
       d.id !== id
     )
@@ -85,7 +83,7 @@ function Instruction({ instruction, editInstruction, deleteInstruction, showDele
     <div className="collapse collapse-arrow">
       <input type="checkbox" checked={reveal} onChange={onReveal} />
       <h2 className="font-bold text-white collapse-title flex flex-row items-center">
-        Instruction {instruction.id}
+        Instruction {index}
       </h2>
       <div className={`collapse-content ${styles.instruction}`}>
         {showDelete ?

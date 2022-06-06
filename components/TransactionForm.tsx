@@ -6,6 +6,7 @@ import { useState, MouseEventHandler, useEffect } from 'react'
 import { dataTypes } from './DataField'
 import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
 import { struct } from '@solana/buffer-layout';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   preset: String;
@@ -15,20 +16,20 @@ interface Props {
 function TransactionForm({ preset, updateResult }: Props) {
   const { publicKey } = useWallet()
 
-  const createTransferInstruction = (id: number): InstructionType => {
+  const createTransferInstruction = (id: string): InstructionType => {
 
     return {
       'id': id,
       'programId': '11111111111111111111111111111111',
       'accounts': [
         {
-          id: 1,
-          pubKey: publicKey?.toBase58() || ' ',
+          id: uuidv4(),
+          pubKey: publicKey?.toBase58() || '',
           signer: true,
           writable: true
         },
         {
-          id: 2,
+          id: uuidv4(),
           pubKey: '',
           signer: false,
           writable: true
@@ -36,12 +37,12 @@ function TransactionForm({ preset, updateResult }: Props) {
       ],
       'data': [
         {
-          id: 1,
+          id: uuidv4(),
           type: Object.keys(dataTypes)[2],
           value: '2'
         },
         {
-          id: 2,
+          id: uuidv4(),
           type: Object.keys(dataTypes)[7],
           value: ''
         }
@@ -49,40 +50,40 @@ function TransactionForm({ preset, updateResult }: Props) {
     }
   }
 
-  const createDefaultInstruction = (id: number): InstructionType => {
+  const createDefaultInstruction = (id: string): InstructionType => {
     return {
       'id': id,
       'programId': '',
       'accounts': [{
-        id: 1,
+        id: uuidv4(),
         pubKey: '',
         signer: false,
         writable: false
       }],
       'data': [{
-        id: 1,
+        id: uuidv4(),
         type: Object.keys(dataTypes)[0],
         value: ''
       }]
     }
   }
-  const [nextId, setNextId] = useState(2);
-  const [instructions, setInstructions] = useState([createDefaultInstruction(1)]);
+  const [instructions, setInstructions] = useState([
+    createDefaultInstruction(uuidv4())
+  ]);
   const { connection } = useConnection();
   const { sendTransaction } = useWallet();
 
   useEffect(() => {
     if (preset == 'transfer') {
-      setInstructions([createTransferInstruction(1)])
+      setInstructions([createTransferInstruction(uuidv4())])
     } else {
-      setInstructions([createDefaultInstruction(1)])
+      setInstructions([createDefaultInstruction(uuidv4())])
     }
   }, [preset])
 
   const addInstruction: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    setInstructions([...instructions, createDefaultInstruction(nextId)]);
-    setNextId(nextId + 1);
+    setInstructions([...instructions, createDefaultInstruction(uuidv4())]);
   };
 
   const handleEditInstruction = (instruction: InstructionType) => {
@@ -91,7 +92,7 @@ function TransactionForm({ preset, updateResult }: Props) {
     );
   };
 
-  const handleDeleteInstruction = (id: number) => {
+  const handleDeleteInstruction = (id: string) => {
     setInstructions(instructions.filter((inst) => inst.id !== id));
   };
 
