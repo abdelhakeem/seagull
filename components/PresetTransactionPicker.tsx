@@ -10,17 +10,9 @@ function PresetTransactionPicker({onChange}: Props) {
   return (
     <div className="flex flex-col gap-3 font-nunito text-white text-xl">
       <label className="text-white">Pick a preset transaction:</label>
-
-      <label className="label cursor-pointer justify-start gap-10">
-        <input
-          type="radio"
-          value="transfer"
-          name="radio-6"
-          className="radio checked:bg-blue-500"
-          onChange={(e) => onChange(e.target.value)}
-        />
-        <span className="label-text">Transfer</span>
-      </label>
+      <button className="btn" onClick={() => onChange('transfer')}>
+        Transfer
+      </button>
     </div>
   )
 }
