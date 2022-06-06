@@ -1,9 +1,9 @@
 import Instructions from './Instructions'
-import {InstructionType} from './Instruction'
+import { InstructionType } from './Instruction'
 import styles from '../styles/TransactionForm.module.css'
-import {useConnection, useWallet} from '@solana/wallet-adapter-react';
-import {useState, MouseEventHandler, useEffect} from 'react'
-import {dataTypes} from './DataField'
+import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import { useState, MouseEventHandler, useEffect } from 'react'
+import { dataTypes } from './DataField'
 import { PublicKey, Transaction, TransactionInstruction } from '@solana/web3.js';
 import { struct } from '@solana/buffer-layout';
 
@@ -12,25 +12,40 @@ interface Props {
   updateResult: Function;
 }
 
-function TransactionForm({preset, updateResult}: Props) {
-  const {publicKey} = useWallet()
+function TransactionForm({ preset, updateResult }: Props) {
+  const { publicKey } = useWallet()
 
   const createTransferInstruction = (id: number): InstructionType => {
 
     return {
       'id': id,
       'programId': '11111111111111111111111111111111',
-      'accounts': [{
-        id: 1,
-        pubKey: publicKey?.toBase58() || ' ',
-        signer: true,
-        writable: true
-      }],
-      'data': [{
-        id: 1,
-        type: Object.keys(dataTypes)[0],
-        value: ''
-      }]
+      'accounts': [
+        {
+          id: 1,
+          pubKey: publicKey?.toBase58() || ' ',
+          signer: true,
+          writable: true
+        },
+        {
+          id: 2,
+          pubKey: '',
+          signer: false,
+          writable: true
+        }
+      ],
+      'data': [
+        {
+          id: 1,
+          type: Object.keys(dataTypes)[2],
+          value: '2'
+        },
+        {
+          id: 2,
+          type: Object.keys(dataTypes)[7],
+          value: ''
+        }
+      ]
     }
   }
 
@@ -88,7 +103,7 @@ function TransactionForm({preset, updateResult}: Props) {
     try {
       const signature = await sendAndConfirmTransaction();
       updateResult({ status: 'success', msg: signature });
-    } catch(error: any) {
+    } catch (error: any) {
       updateResult({ status: 'error', msg: error.message });
     }
   }

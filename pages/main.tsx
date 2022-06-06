@@ -12,7 +12,7 @@ interface Props {
 
 const Main: React.FC<Props> = ({setCluster, cluster}) => {
 
-  const [preset, setPreset] = useState("single instruction");
+  const [preset, setPreset] = useState("");
   const [result, setResult] = useState({
     status: 'info',
     msg: "[Transaction result]"

@@ -21,30 +21,6 @@ function PresetTransactionPicker({onChange}: Props) {
         />
         <span className="label-text">Transfer</span>
       </label>
-
-      <label className="label cursor-pointer justify-start gap-10">
-        <input
-          type="radio"
-          value="single instruction"
-          name="radio-6"
-          className="radio checked:bg-blue-500"
-          onChange={(e) => onChange(e.target.value)}
-          defaultChecked={true}
-        />
-        <span className="label-text">Single instruction</span>
-      </label>
-
-      <label className="label cursor-pointer justify-start gap-10">
-        <input
-          type="radio"
-          value="Multi instructions"
-          name="radio-6"
-          className="radio checked:bg-blue-500"
-          onChange={(e) => onChange(e.target.value)}
-        />
-        <span className="label-text">Multi instructions</span>
-      </label>
-
     </div>
   )
 }
